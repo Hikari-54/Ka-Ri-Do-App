@@ -12,6 +12,7 @@ a{
 body{
     scroll-behavior: smooth;
     font-family: 'Inter', sans-serif;
+    color: #575767;
 }
 .container{
     margin: 0 30px;
@@ -21,11 +22,13 @@ h1{
     font-size: 48px;
     font-weight: 800;
     margin-top: 30px;
+    margin-bottom: 15px;
 }
 h2{
     font-size: 20px;
     font-weight: 700;
     margin-top: 30px;
+    margin-bottom: 15px;
 }
 p{
     font-size: 18px;
@@ -40,8 +43,8 @@ p{
     font-weight: 700;
 }
 
-.gray{
-    color: #575767;
+.black{
+    color: #000000;
 }
 .light-gray{
     color: #A8A8B4;
@@ -69,11 +72,48 @@ header h2{
 main{
     height: 1500px;
 }
-.inside-header p{
-    margin: 15px 0;
-}
 .divider{
     width: 100%;
+    margin: 30px 0;
     border-bottom: 1px solid #DADADA;
     color: #DADADA;
+}
+.timer-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.timer-block h2.black{
+    margin-top: 0;
+}
+input[type="time"]{
+    font-size: 20px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #643FDB;
+    border-radius: 5px;
+    color: #575767;
+}
+.remaining-timer::-webkit-calendar-picker-indicator{
+    display: none;
+    -webkit-appearance: none;
+}
+.timer-control{
+    display: flex;
+
+}
+.start-timer,
+.reset-timer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin-left: 15px;
+    border: 1px solid #643FDB;
+    border-radius: 5px;
+}
+.start-timer img{
+    margin-left: 5px;
 }

@@ -24,11 +24,28 @@
     <main>
         <div class="container">
             <div class="inside-header">
-                <h1>Today</h1>
-                <p class="text-small bold gray">Inactivity is worse than any failure.</p>
+                <h1 class="black">Today</h1>
+                <p class="text-small bold">Inactivity is worse than any failure.</p>
             </div>
             <div class="divider"></div>
 
+
+            <div class="divider"></div>
+            <div class="timer-block">
+                <h2 class="black">Timer setting</h2>
+                <div class="timer-control">
+                    <input type="time" name="setup-timer" step="1" class="setup-timer">
+                    <div class="start-timer">
+                        <img src="svg/start-timer.svg" alt="start-timer">
+                    </div>
+                    <div class="reset-timer">
+                        <img src="svg/reset-timer.svg" alt="reset-timer">
+                    </div>
+                </div>
+                <h2>Remaining time</h2>
+                <input type="time" name="remaining-timer" step="1" class="remaining-timer" disabled>
+
+            </div>
         </div>
     </main>
     
