@@ -6,7 +6,10 @@ const time = {
 }
 // Переменная для setInterval
 let interval = null;
+// Инициализируем звуковой файл
+let alarm = new Audio("audio/alarm.mp3");
 
+// input'ы начального и оставшегося времени
 const initialTime = document.querySelector(".setup-timer");
 const remainingTime = document.querySelector(".remaining-timer");
 
@@ -14,24 +17,24 @@ const remainingTime = document.querySelector(".remaining-timer");
 const startButton = document.querySelector(".start-timer");
 startButton.addEventListener("click", startTimer);
 function startTimer(){
+    // Синхронизируем время
     remainingTime.value = initialTime.value;
+
+    // Блок двойного запуска таймера
     startButton.disabled = true;
     
+    // Расчёт актуального времени
     time.h = +initialTime.value.slice(0,2);
     time.m = +initialTime.value.slice(3, 5);
     time.s = +initialTime.value.slice(6);
     time.total = time.h*60*60 + time.m*60 +time.s;
 
-    // блок двойного запуска таймера
-    
-
     interval = setInterval(timerCountdown, 1000);
-
+    // Ежесекундный перерасчёт времени
     function timerCountdown(){
-        console.log('hi');
-
 
         if(time.total > 0){
+
             time.total--;
             time.h = Math.floor(time.total/3600);
             time.m = Math.floor((time.total % 3600) / 60);
@@ -61,19 +64,29 @@ function startTimer(){
             remainingTime.value = `${hStr}:${mStr}:${sStr}`;
         }
         if(time.total == 0){
+            // Сбрасываем интервал по завершению
             clearInterval(interval);
+
+            // Возврат возможности запуска таймера
             startButton.disabled = false;
+
+            // Звук таймера
+            alarm.play();
+            setTimeout(()=>{
+                alarm.pause();
+                alarm.currentTime = 0.0;
+            }, 5000);
         }
     }
-
 }
 
 // Сброс таймера
 const resetButton = document.querySelector(".reset-timer");
 resetButton.addEventListener("click", resetTimer);
 function resetTimer() {
+    // Сбрасываем интервал по завершению
     clearInterval(interval);
-    initialTime.value = "00:00:00";
+
     remainingTime.value = "00:00:00";
 
     time.h = 0;
@@ -81,5 +94,10 @@ function resetTimer() {
     time.s = 0;
     time.total = 0;
 
+    // Сброс звука таймера
+    alarm.pause();
+    alarm.currentTime = 0.0;
+
+    // Возврат возможности запуска таймера
     startButton.disabled = false;
 }
