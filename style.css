@@ -101,7 +101,6 @@ input[type="time"]{
 }
 .timer-control{
     display: flex;
-
 }
 .start-timer,
 .reset-timer{
@@ -113,6 +112,10 @@ input[type="time"]{
     margin-left: 15px;
     border: 1px solid #643FDB;
     border-radius: 5px;
+    background-color: #e3daff;
+}
+button:disabled{
+    background-color: #fff;
 }
 .start-timer img{
     margin-left: 5px;
