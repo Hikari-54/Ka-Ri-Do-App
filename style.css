@@ -146,6 +146,7 @@ main{
     border: none;
     width: 28px;
     height: 26px;
+    cursor: pointer;
 }
 
 
@@ -168,12 +169,18 @@ input[type="time"]{
     border-radius: 5px;
     color: #575767;
 }
+input[type="time"]:first-child{
+    cursor: pointer;
+}
 .remaining-timer::-webkit-calendar-picker-indicator{
     display: none;
     -webkit-appearance: none;
 }
 .timer-control{
     display: flex;
+}
+.timer-control button{
+    cursor: pointer;
 }
 .start-timer,
 .reset-timer{
@@ -189,6 +196,7 @@ input[type="time"]{
 }
 button:disabled{
     background-color: #fff;
+    cursor: default;
 }
 .start-timer img{
     margin-left: 5px;
