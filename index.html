@@ -27,8 +27,12 @@
                 <h1 class="black">Today</h1>
                 <p class="text-small bold">Inactivity is worse than any failure.</p>
             </div>
-            <div class="divider"></div>
 
+            <div class="divider"></div>
+            <div class="container-input-task">
+                <input type="text" name="task" class="input-task medium" placeholder="Add todo">
+                <button class="addTaskButton"><img src="svg/add-task.svg" alt="add task"></button>
+            </div>
 
             <div class="divider"></div>
             <div class="timer-block">
@@ -36,10 +40,10 @@
                 <div class="timer-control">
                     <input type="time" name="setup-timer" value="00:05:00" step="1" class="setup-timer">
                     <button class="start-timer">
-                        <img src="svg/start-timer.svg" alt="start-timer">
+                        <img src="svg/start-timer.svg" alt="start timer">
                     </button>
                     <button class="reset-timer">
-                        <img src="svg/reset-timer.svg" alt="reset-timer">
+                        <img src="svg/reset-timer.svg" alt="reset timer">
                     </button>
                 </div>
                 <h2>Remaining time</h2>
