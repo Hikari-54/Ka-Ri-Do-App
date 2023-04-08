@@ -83,6 +83,32 @@ main{
     border-bottom: 1px solid #DADADA;
     color: #DADADA;
 }
+.todo-task{
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.todo-task p{
+    width: 100%;
+    height: 24px;
+    margin: 0 10px;
+}
+.todo-task button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 27px;
+    height: 24px;
+    border: #DADADA solid 2px;
+    background-color: #fff;
+    padding: 0 1px;
+}
+.todo-task button:last-child{
+    justify-self: flex-end;
+}
+
+
 
 /* Добавление задачи */
 .container-input-task{
