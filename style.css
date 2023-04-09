@@ -90,6 +90,7 @@ main{
 }
 .todo-task p{
     width: calc(100% - 68px); /* 68px = ширина кнопок по бокам + два margin'a */
+    overflow-wrap: anywhere;
     min-height: 24px;
     margin: 0 10px;
 }
