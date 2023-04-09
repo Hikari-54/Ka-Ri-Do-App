@@ -145,6 +145,7 @@ main{
 .input-task::placeholder { 
     font-family: inherit;
     color: #575767;
+    user-select: none;
 }
 .addTaskButton{
     display: flex;
