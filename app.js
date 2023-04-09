@@ -1,3 +1,50 @@
+// Счётчик для индекса задач в LocalStorage
+let numOfTasksInStorage = 0;
+// Копия задач из LocalStorage
+const tasksInStorage = {};
+
+const inputTask = document.querySelector(".input-task");
+
+// Загрузка задач из LocalStorage
+function syncHostToStorage(){
+
+}
+// Добавление задачи
+function addTask(){
+    if (inputTask.value != ""){
+        // Контейнер для списка задач
+        const taskList = document.querySelector(".task-list");
+        // Шаблон задачи
+        const template = document.querySelector("template");
+        // Тег текста задачи
+        const textOfTaks = template.content.querySelector("p");
+        // Вставка текста из input'a
+        textOfTaks.textContent = inputTask.value;
+        // Копия заполненного шаблона
+        let templateCopy = template.content.cloneNode(true);
+        // Добавляем новую задачу
+        taskList.append(templateCopy);
+        // Удаляем введённый текст в input
+        inputTask.value = "";
+    }
+}
+// Удаление задачи
+function deleteTask(){
+
+}
+
+// Обработка события добавления задачи
+const addTaskButton = document.querySelector(".addTaskButton");
+addTaskButton.addEventListener("click", addTask);
+
+// Обработка события удаления задачи
+
+
+
+
+
+
+// Работа с таймером
 const time = {
     total: 0,
     h: 0,
