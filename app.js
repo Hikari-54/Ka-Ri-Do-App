@@ -13,15 +13,26 @@ function syncHostToStorage(){
 
         // Добавление всех задач из localStorage в DOM
         for (key in tasksInStorage) {
-            
+
             let currentTaskFromStorage = tasksInStorage[key];
+
+            // Находим разделитель
+            let indexOfDivider = currentTaskFromStorage.indexOf("~");
+
+            let text = currentTaskFromStorage.slice(0, indexOfDivider);
+            let color = currentTaskFromStorage.slice(indexOfDivider + 1);
             
             // Замена текста задачи в шаблоне
-            textOfTaks.textContent = currentTaskFromStorage;
+            textOfTaks.textContent = text;
+            
             // Копия заполненного шаблона
             let templateCopy = template.content.cloneNode(true);
+
             // Добавляем новую задачу
             taskList.append(templateCopy);
+
+            // Вставка цвета задачи
+            document.querySelector(".todo-task:last-of-type").style.borderLeft = `2px solid ${color}`;
 
             // Обновляем счётчик для задач
             numOfTasksInStorage = key;
@@ -29,7 +40,7 @@ function syncHostToStorage(){
         numOfTasksInStorage++;
     } 
 }
-// При загрузке DOM задачи из localStorage добавляются на страницу
+// При загрузке DOM, задачи из localStorage добавляются на страницу
 addEventListener("DOMContentLoaded", syncHostToStorage);
 
 
@@ -46,13 +57,18 @@ function addTask(){
     if (inputTask.value != ""){
         // Вставка текста из input'a
         textOfTaks.textContent = inputTask.value;
+
         // Копия заполненного шаблона
         let templateCopy = template.content.cloneNode(true);
+
+        // Добавление цветового тега
+        templateCopy.querySelector(".todo-task").style.borderLeft = `2px solid ${currentColor}`;
+
         // Добавляем новую задачу
         taskList.append(templateCopy);
 
         // Добавление в LocalStorage
-        tasksInStorage[numOfTasksInStorage] = inputTask.value;
+        tasksInStorage[numOfTasksInStorage] = inputTask.value + `~${currentColor}`;
         numOfTasksInStorage++;
         localStorage.setItem("TasksInStorage", JSON.stringify(tasksInStorage));
 
@@ -78,7 +94,6 @@ function taskDone(elem){
         taskBlock.querySelector("p").style.color = "#575767";
         taskBlock.querySelector("p").style.textDecoration = "none";
     }
-
 }
 
 
@@ -93,7 +108,7 @@ function deleteTask(elem){
 
     // Ищем ключ по тексту задачи
     for (let numOfKeyInArr in arrOfKeys){
-        if (textOfTask === tasksInStorage[arrOfKeys[numOfKeyInArr]]){
+        if (tasksInStorage[arrOfKeys[numOfKeyInArr]].includes(textOfTask)){
             // Удаляем найденное свойство
             delete tasksInStorage[arrOfKeys[numOfKeyInArr]];
             // Вносим новый объект в localStorage, заменяя им прошлую версию
@@ -104,6 +119,38 @@ function deleteTask(elem){
     currentTask.remove();
 }
 
+
+// Добавление цветовых тегов для задачи
+let isColorPickerOpened = false;
+let currentColor = "rgb(226 21 21)";
+
+const colorPicker = document.querySelector(".colorPicker");
+const colorPickerButton = document.querySelector('.colorPickerButton');
+// Открытие модульного окна
+colorPickerButton.addEventListener("click", colorPickerAppearance);
+function colorPickerAppearance() {
+    if (isColorPickerOpened == false){
+        isColorPickerOpened = true;
+        let inputTaskPosition = inputTask.getBoundingClientRect();
+        colorPicker.style.display = "block";
+        colorPicker.style.top = inputTaskPosition.top + window.pageYOffset - 80 + "px";
+    } else{
+        isColorPickerOpened = false;
+        colorPicker.style.display = "none";
+    }    
+}
+// Выбор цвета
+const colorPickerItems = document.querySelectorAll(".colorPickerItem");
+for (let numOfColorButton = 0; numOfColorButton < colorPickerItems.length; numOfColorButton++) {
+    let colorButton = colorPickerItems[numOfColorButton];
+    colorButton.addEventListener("click", colorChanger)
+}
+function colorChanger(){
+    currentColor = this.style.backgroundColor;
+    isColorPickerOpened = false;
+    colorPicker.style.display = "none";
+    colorPickerButton.style.backgroundColor = currentColor;
+};
 
 
 // Работа с таймером
