@@ -2,6 +2,8 @@
 let numOfTasksInStorage = 0;
 // Копия задач из LocalStorage
 let tasksInStorage = {};
+// Drag&Drop
+let draggables = document.querySelectorAll(".draggable");
 
 
 // Загрузка задач из LocalStorage - вызывается при загрузке DOM
@@ -38,6 +40,10 @@ function syncHostToStorage(){
             numOfTasksInStorage = key;
         }
         numOfTasksInStorage++;
+
+        // Drag&Drop обработчики для задач
+        draggables = document.querySelectorAll(".draggable");
+        addDnDListeners();
     } 
 }
 // При загрузке DOM, задачи из localStorage добавляются на страницу
@@ -52,6 +58,7 @@ const taskList = document.querySelector(".task-list");
 const template = document.querySelector("template");
 // Тег текста задачи в шаблоне
 const textOfTaks = template.content.querySelector("p");
+
 // Добавление задачи
 function addTask(){
     if (inputTask.value != ""){
@@ -74,6 +81,12 @@ function addTask(){
 
         // Удаляем введённый текст в input
         inputTask.value = "";
+
+        // Drag&Drop
+        draggables = document.querySelectorAll(".draggable");
+        removeDnDListeners();
+        addDnDListeners();
+
     }
 }
 // Обработка события добавления задачи
@@ -118,6 +131,7 @@ function deleteTask(elem){
     // Удаление задачи из DOM дерева
     currentTask.remove();
 }
+// --------------------------------------------------------------------------------------------
 
 
 // Добавление цветовых тегов для задачи
@@ -128,6 +142,7 @@ const colorPicker = document.querySelector(".colorPicker");
 const colorPickerButton = document.querySelector('.colorPickerButton');
 // Открытие модульного окна
 colorPickerButton.addEventListener("click", colorPickerAppearance);
+
 function colorPickerAppearance() {
     if (isColorPickerOpened == false){
         isColorPickerOpened = true;
@@ -151,6 +166,103 @@ function colorChanger(){
     colorPicker.style.display = "none";
     colorPickerButton.style.backgroundColor = currentColor;
 };
+// --------------------------------------------------------------------------------------------
+
+
+// Drag&Drop
+// Элементы DnD - draggables
+// Единственный контейнер для ToDo - taskList
+
+// Для draggable элементов
+function addDnDListeners() {
+    draggables.forEach(DnDElement => {
+        // Desktop
+        DnDElement.addEventListener("dragstart", dragStart);
+        DnDElement.addEventListener("dragend", dragEnd);
+        // Mobile
+        DnDElement.addEventListener("touchstart", dragStart);
+        DnDElement.addEventListener("touchend", dragEnd);
+    });
+}
+function dragStart() {
+    this.classList.add("dragging");
+}
+function dragEnd() {
+    this.classList.remove("dragging");
+}
+function removeDnDListeners() {
+    draggables.forEach(DnDElement => {
+        // Desktop
+        DnDElement.removeEventListener("dragstart", dragStart);
+        DnDElement.removeEventListener("dragend", dragEnd);
+        // Mobile
+        DnDElement.removeEventListener("touchstart", dragStart);
+        DnDElement.removeEventListener("touchend", dragEnd);
+    });
+}
+
+// Для dropabble контейнера (taskList)
+// Desktop
+taskList.addEventListener("dragover", dragOver);
+// Mobile
+taskList.addEventListener("touchmove", dragOverMobile);
+
+// Desktop
+function dragOver(e) {
+    e.preventDefault();
+    // Выясним перед каким элементом нужно вставить dragging элемент
+
+    nextDnDElement = getNextDnDElement(e.clientY);
+
+    const dragging = document.querySelector(".dragging");
+
+    if (nextDnDElement == null){
+        taskList.append(dragging);
+    } else{
+        taskList.insertBefore(dragging, nextDnDElement);
+    }
+}
+// Mobile
+function dragOverMobile(e) {
+    e.preventDefault();
+    // Выясним перед каким элементом нужно вставить dragging элемент
+
+    nextDnDElement = getNextDnDElement(e.targetTouches[0].clientY);
+
+    const dragging = document.querySelector(".dragging");
+
+    if (nextDnDElement == null){
+        taskList.append(dragging);
+    } else{
+        taskList.insertBefore(dragging, nextDnDElement);
+    }
+}
+
+// Получаем следующий элемент после указателя мыши
+function getNextDnDElement(y) {
+    // Начальное значение для сравнения
+    let previousDistanceToDragging = Number.NEGATIVE_INFINITY;
+    let nextDnDElement = null;
+    
+    let allOtherDraggables = [...document.querySelectorAll(".draggable:not(.dragging)")];
+
+    allOtherDraggables.forEach(currentDraggable => {
+        
+        const box = currentDraggable.getBoundingClientRect();
+        // Высчитываем центр draggable item'a
+        const distanceToDragging = y - box.top - box.height / 2;
+        // Нужно найти наиближайшее значение к мыши, но меньшее нуля
+        if (distanceToDragging > previousDistanceToDragging && distanceToDragging < 0){
+            previousDistanceToDragging = distanceToDragging;
+            nextDnDElement = currentDraggable;
+        }
+    });
+
+    return nextDnDElement;
+}
+
+
+// --------------------------------------------------------------------------------------------
 
 
 // Работа с таймером
