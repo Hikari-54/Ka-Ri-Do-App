@@ -261,3 +261,8 @@ button:disabled{
 button:focus{
     border: 2px solid #575767;
 }
+
+
+h1[contenteditable="true"]{
+    caret-color: #000;
+}

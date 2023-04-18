@@ -9,7 +9,7 @@ let draggables = document.querySelectorAll(".draggable");
 // Загрузка задач из LocalStorage - вызывается при загрузке DOM
 function syncHostToStorage(){
     // Если задачи существуют
-    if(localStorage.key("TasksInStorage") != null){
+    if(localStorage.getItem("TasksInStorage") != null){
         // Получаем задачи из LocalStorage
         tasksInStorage = JSON.parse(localStorage.getItem("TasksInStorage"));
 
@@ -44,6 +44,17 @@ function syncHostToStorage(){
         // Drag&Drop обработчики для задач
         draggables = document.querySelectorAll(".draggable");
         addDnDListeners();
+
+        // Загрузка изменённых надписей (contentEditable)
+        if(localStorage.getItem("p-editable") != null){
+            document.querySelector(".p-editable").textContent = localStorage.getItem("p-editable");
+        }
+        if(localStorage.getItem("span-editable") != null){
+            document.querySelector(".span-editable").textContent = localStorage.getItem("span-editable");
+        }
+        if(localStorage.getItem("h1-editable") != null){
+            document.querySelector(".h1-editable").textContent = localStorage.getItem("h1-editable");
+        }
     } 
 }
 // При загрузке DOM, задачи из localStorage добавляются на страницу
@@ -369,3 +380,21 @@ function resetTimer() {
     // Возврат возможности запуска таймера
     startButton.disabled = false;
 }
+
+
+// --------------------------------------------------------------------------------------------
+
+
+// Сохранение изменённых надписей с contentEditable = true
+const contendEditable = document.querySelectorAll("*[contenteditable=true]");
+
+contendEditable.forEach(editable => {
+    editable.onblur = (e)=>{
+        // Массив всех классов элемента
+        const classes = e.target.classList.value.split(" ");
+        // Нужный класс - всегда последний
+        const selector = classes[classes.length - 1];
+        // Запись в LocalStorage
+        localStorage.setItem(selector, e.target.innerText)
+    };
+});
