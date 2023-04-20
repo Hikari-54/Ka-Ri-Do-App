@@ -142,9 +142,9 @@ function deleteTask(elem){
     // Удаление задачи из DOM дерева
     currentTask.remove();
 }
+
+
 // --------------------------------------------------------------------------------------------
-
-
 // Добавление цветовых тегов для задачи
 let isColorPickerOpened = false;
 let currentColor = "rgb(226 21 21)";
@@ -177,9 +177,9 @@ function colorChanger(){
     colorPicker.style.display = "none";
     colorPickerButton.style.backgroundColor = currentColor;
 };
+
+
 // --------------------------------------------------------------------------------------------
-
-
 // Drag&Drop
 // Элементы DnD - draggables
 // Единственный контейнер для ToDo - taskList
@@ -274,8 +274,6 @@ function getNextDnDElement(y) {
 
 
 // --------------------------------------------------------------------------------------------
-
-
 // Работа с таймером
 const time = {
     total: 0,
@@ -383,8 +381,6 @@ function resetTimer() {
 
 
 // --------------------------------------------------------------------------------------------
-
-
 // Сохранение изменённых надписей с contentEditable = true
 const contendEditable = document.querySelectorAll("*[contenteditable=true]");
 
@@ -397,4 +393,25 @@ contendEditable.forEach(editable => {
         // Запись в LocalStorage
         localStorage.setItem(selector, e.target.innerText)
     };
+});
+
+
+// --------------------------------------------------------------------------------------------
+// Модальное окно помощи
+const helpButton = document.querySelector(".help-button");
+const modalHelp = document.querySelector(".modal-help");
+const modalHelpButton = document.querySelector(".modal-help button");
+const overlay = document.querySelector(".overlay");
+
+helpButton.addEventListener("click", () => {
+    modalHelp.classList.add("active");
+    overlay.classList.add("active");
+});
+modalHelpButton.addEventListener("click", () => {
+    modalHelp.classList.remove("active");
+    overlay.classList.remove("active");
+});
+overlay.addEventListener("click", () => {
+    modalHelp.classList.remove("active");
+    overlay.classList.remove("active");
 });

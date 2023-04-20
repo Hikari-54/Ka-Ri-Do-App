@@ -263,6 +263,80 @@ button:focus{
 }
 
 
-h1[contenteditable="true"]{
-    caret-color: #000;
+/* Модальное окно помощи */
+.help-button{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    width: 40px;
+    height: 40px;
+    background-color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 500;
+
+    border: 1px solid #575767;
+    border-radius: 50%;
+}
+.help-button:hover{
+    background-color: #DADADA;
+}
+.modal-help{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out all;
+
+    width: 500px;
+    max-width: 80%;
+    padding: 50px 30px;
+    background-color: #FFFFFF;
+    border: 1px solid #575767;
+    border-radius: 5px;
+}
+.modal-help.active{
+    transform: translate(-50%, -50%) scale(1);
+}
+.modal-help ol{
+    list-style-position: inside;
+}
+.modal-help li{
+    margin-bottom: 30px;
+}
+.modal-help li:last-child{
+    margin-bottom: 0;
+}
+.modal-help button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 15px;
+    right: 15px;
+
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    font-size: 24px;
+    font-weight: 700;
+}
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #00000080;
+    transition: 200ms ease-in-out all;
+
+    opacity: 0;
+    pointer-events: none;
+}
+.overlay.active{
+    opacity: 1;
+    pointer-events: all;
 }
