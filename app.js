@@ -106,9 +106,16 @@ function addTask(){
 
     }
 }
-// Обработка события добавления задачи
+// Добавление задачи нажатием на кнопку
 const addTaskButton = document.querySelector(".addTaskButton");
 addTaskButton.addEventListener("click", addTask);
+
+// Добавление задачи нажатием Enter'а
+document.addEventListener("keyup", (e) => {
+    if (e.key == "Enter"){
+        addTask();
+    };
+});
 
 
 // Выполнение задачи - вызывается из HTML кода

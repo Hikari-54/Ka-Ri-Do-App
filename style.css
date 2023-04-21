@@ -340,3 +340,7 @@ button:focus{
     opacity: 1;
     pointer-events: all;
 }
+
+.span-editable, .h1-editable, .p-editable{
+    cursor: pointer;
+}
