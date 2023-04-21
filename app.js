@@ -4,6 +4,8 @@ let numOfTasksInStorage = 0;
 let tasksInStorage = {};
 // Drag&Drop
 let draggables = document.querySelectorAll(".draggable");
+// Анимация печатающегося текста
+const typingSubtitle = document.querySelector(".p-editable");
 
 
 // Загрузка задач из LocalStorage - вызывается при загрузке DOM
@@ -55,6 +57,10 @@ function syncHostToStorage(){
         if(localStorage.getItem("h1-editable") != null){
             document.querySelector(".h1-editable").textContent = localStorage.getItem("h1-editable");
         }
+
+        // Анимация печатающегося текста
+        textTyping(document.querySelector(".p-editable"));
+
     } 
 }
 // При загрузке DOM, задачи из localStorage добавляются на страницу
@@ -415,3 +421,20 @@ overlay.addEventListener("click", () => {
     modalHelp.classList.remove("active");
     overlay.classList.remove("active");
 });
+
+
+// Анимация печатающегося текста
+function textTyping(element){
+    let string = element.innerText;
+    let index = 1;
+
+    const interval = setInterval(() => {
+        element.innerText = string.slice(0, index);
+        index++;
+        if (index > string.length){
+            clearInterval(interval);
+        }
+    }, 60);
+};
+
+
